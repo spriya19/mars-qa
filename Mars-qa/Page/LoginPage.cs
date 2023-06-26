@@ -1,53 +1,33 @@
 ﻿using Mars_qa.Utilities;
-using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Mars_qa.Page
 {
-    public class LoginPage : CommonDrive
+    public class LoginPage : CommonDriver
     {
-        public void loginSteps(IWebDriver driver)
+        public void loginsteps(IWebDriver driver)
         {
-            //Launch Mars-QA Application
-            driver.Navigate().GoToUrl("http://localhost:5000/");
+            //Launch portal
+            driver.Navigate().GoToUrl("http://localhost:5000");
             driver.Manage().Window.Maximize();
-            Thread.Sleep(1000);
-            // Click the signin button
-            IWebElement signButton = driver.FindElement(By.XPath("//a[normalize-space()='Sign In']"));
-            signButton.Click();
 
-            // identify Emailtextbox enter valid Email id
-            IWebElement emailTextbox = driver.FindElement(By.Name("email"));
-            emailTextbox.SendKeys("spriyak86@gmail.com");
-            
-            //Identify password textbox and enter valid password
+            //sign in Valid Credential
+            IWebElement signinButton = driver.FindElement(By.XPath("//*[@id=\"home\"]/div/div/div[1]/div/a"));
+            signinButton.Click();
+            IWebElement emailaddressTextbox = driver.FindElement(By.Name("email"));
+            emailaddressTextbox.SendKeys("spriyak86@gmail.com");
             IWebElement passwordTextbox = driver.FindElement(By.Name("password"));
-            passwordTextbox.SendKeys("KkMnithi@55");
-
-            // check user has checked successfully
+            passwordTextbox.SendKeys("121212");
             IWebElement remembermeCheckbox = driver.FindElement(By.Name("rememberDetails"));
             remembermeCheckbox.Click();
-
-            // click longin button
-            IWebElement loginButton = driver.FindElement(By.XPath("//button[normalize-space()='Login']"));
+            IWebElement loginButton = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[4]/button"));
             loginButton.Click();
-            Thread.Sleep(3000);
-
-            IWebElement HiSathiyapriya = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/div[1]/div[2]/div/span"));
-            if (HiSathiyapriya.Text == "Hi Sathiyapriya")
-            {
-                Assert.Pass(" Sathiyapriya has logged in succesfully");
-            }
-            else
-            {
-                Assert.Fail("Sathiyapriya has not been created successfully");
-            }
+            Thread.Sleep(2000);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mars_qa.Page
 {
-    public class SkillsPage
+    internal class SkillsPage
     {
     }
 }

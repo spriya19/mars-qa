@@ -1,6 +1,7 @@
 ﻿using Mars_qa.Utilities;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,82 +10,82 @@ using System.Threading.Tasks;
 
 namespace Mars_qa.Page
 {
-    public class LanguagePage:CommonDrive
+    public class LanguagePage : CommonDriver
     {
-        public void gotoLanguagePage(IWebDriver driver)
+        public void addLanguage(IWebDriver driver)
         {
-           IWebElement languageTab = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[1]"));
-            languageTab.Click();
-
+            //create new record
+            //select languagetab
+           // IWebElement languagesTab = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[1]"));
+           // languagesTab.Click();
+           // Thread.Sleep(2000);
             IWebElement addnewButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/thead/tr/th[3]/div"));
             addnewButton.Click();
+
         }
         public void languageInput(IWebDriver driver)
         {
-
-            // Generate a random language value
+            /*//Generate random values in languagefield
             Random random = new Random();
-            string[] languages = { "English", "Hindi", "Tamil", "German" };
-            int index = random.Next(languages.Length);
-            string randomLanguage = languages[index];
+            string[] languages = { "Tamil", "English", "Telugu", "Kannada" };
+            //int index = random.Next(languages.Length);
+            int index = random.Next(0, languages.Length);
+            string randomLanguage = languages[index];*/
 
-            // Find the input field or element where you want to send the random language value
-            IWebElement languageInput = driver.FindElement(By.Name("name"));
-
-            // Send the random language value to the input field
-            languageInput.SendKeys(randomLanguage);
-            Assert.Pass("Language has been added Successfully");
+            //Enter the language input
+            IWebElement languageTextbox = driver.FindElement(By.Name("name"));
+            languageTextbox.SendKeys("Tamil");
+            Thread.Sleep(2000);
         }
-
         public void levelOption(IWebDriver driver)
         {
-            Random random = new Random();
-            string[] chooselanguageslevel = { "Basic", "Conversational", "Fluent", "Native/Bilingual" };
-            int level = random.Next(chooselanguageslevel.Length);
-            string randomLevel = chooselanguageslevel[level];
-            Thread.Sleep(2000);
 
-            // select the level
-            IWebElement selectlevelInput = driver.FindElement(By.Name("level"));
-            selectlevelInput.Click();
-            Thread.Sleep(2000);
-            // enter the input keys
-            selectlevelInput.SendKeys(randomLevel);
-            Console.WriteLine("Language Level has been selected successfully");
+            //Select the level option
+            /*//Generate random values in languagefield
+            Random random = new Random();
+            string[] levelOption = { "Basic", "Cnversational", "Fluent", "Native/Billingual" };
+            //int index = random.Next(languages.Length);
+            int index = random.Next(levelOption.Length);
+            string randomLevel = levelOption[index];*/
+
+            IWebElement languageLevelDropdown = driver.FindElement(By.Name("level"));
+            languageLevelDropdown.Click();
+           IWebElement nativeBillingualOption = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[2]/select/option[5]"));
+            nativeBillingualOption.Click();
         }
-        public void verifycreateLanguage(IWebDriver driver)
-        { 
-            // Click the AddButton
-            IWebElement addButton = driver.FindElement(By.XPath("//input[@value='Add']"));
+        public void createLanguage(IWebDriver driver)
+        {
+            IWebElement addButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[3]/input[1]"));
             addButton.Click();
+            Thread.Sleep(3000);
+        }
+        public string  GetVerifyLanguageCreation(IWebDriver driver)
+        {
+            //check if record added
+            IWebElement newLanguage = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr/td[1]"));
+            return newLanguage.Text;
+           /* if (newLanguage.Text == "Tamil")
+            {
+                Assert.Pass("Language have been Successfully Created");
+            }
+            else
+            {
+                Assert.Fail("Language have not been Successfully Created");
+            }*/
+        }
+        public void updateLanguage(IWebDriver driver)
+        {
+            //Click the edit Icon
+            IWebElement editLanguage = driver.FindElement(By.XPath("//td[@class='right aligned']//i[@class='outline write icon']"));
+            editLanguage.Click();
 
-            Assert.Pass("Language has been successfully added to the profile page");
+            //update the langu
+        }
 
-        }
-        public void editLanguage(IWebDriver driver)
-        {
-            //Click the Edit Icon
-            IWebElement editIcon = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr/td[3]/text()"));
-            editIcon.Click();
-        }
-        public void editLanguageInput(IWebDriver driver)
-        {
-            //Edit the LAnguage Input
-            IWebElement editlanguageInput = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr/td[1]"));
-            editlanguageInput.Clear();
-            // Generate a random language value
-            Random random = new Random();
-            string[] editlanguages = { "Tamil12", "Chineese", "Marati", "Arabic" };
-            int index = random.Next(editlanguages.Length);
-            string randomeditLanguage = editlanguages[index];
-            editlanguageInput.SendKeys(randomeditLanguage);
-            Assert.Pass("Language has been Edited successfully");
-        }
-        public void updateeditlanguage(IWebDriver driver)
-        {
-            IWebElement updateeditlanguage = driver.FindElement(By.XPath("//input[@value='Update']"));
-            updateeditlanguage.Click();
-            Assert.Pass("Language has been updated successfully");
-        }
     }
 }
+        
+
+
+    
+

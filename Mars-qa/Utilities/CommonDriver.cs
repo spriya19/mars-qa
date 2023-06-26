@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Mars_qa.Utilities
 {
-    public class CommonDrive
+    public class CommonDriver
     {
         public IWebDriver driver;
     }
-
 }
