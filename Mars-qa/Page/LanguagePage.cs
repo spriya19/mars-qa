@@ -82,7 +82,7 @@ namespace Mars_qa.Page
             IWebElement editLanguage = driver.FindElement(By.XPath("//td[@class='right aligned']//i[@class='outline write icon']"));
             editLanguage.Click();
 
-            //update the langu
+           
         }
 
     }
