@@ -14,77 +14,91 @@ namespace Mars_qa.Page
     {
         public void addLanguage(IWebDriver driver)
         {
-            //create new record
-            //select languagetab
-           // IWebElement languagesTab = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[1]"));
-           // languagesTab.Click();
-           // Thread.Sleep(2000);
-            IWebElement addnewButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/thead/tr/th[3]/div"));
+           
+            Wait.WaitToBeExists(driver, "XPath", "//th[text()='Language']//following-sibling::th[@class='right aligned']/div[text()='Add New']",7);
+           //create new record
+            IWebElement addnewButton = driver.FindElement(By.XPath("//th[text()='Language']//following-sibling::th[@class='right aligned']/div[text()='Add New']"));
             addnewButton.Click();
-
         }
-        public void languageInput(IWebDriver driver)
+        public void inputKeys1(IWebDriver driver) 
         {
-            //Generate random values in languagefield
-            Random random = new Random();
-            string[] languages = { "Tamil", "English", "Telugu", "Kannada" };
-            //int index = random.Next(languages.Length);
-            int index = random.Next(0, languages.Length);
-            string randomLanguage = languages[index];
-
-            //Enter the language input
             IWebElement languageTextbox = driver.FindElement(By.Name("name"));
-            languageTextbox.SendKeys(randomLanguage);
+            languageTextbox.SendKeys("Spanish");
             Thread.Sleep(2000);
-        }
-        public void levelOption(IWebDriver driver)
-        {
-
-            //Select the level option
-            //Generate random values in languagefield
-            Random random = new Random();
-            string[] levelOption = { "Basic", "Cnversational", "Fluent", "Native/Billingual" };
-            //int index = random.Next(languages.Length);
-            int index = random.Next(levelOption.Length);
-            string randomLevel = levelOption[index];
             IWebElement languageLevelDropdown = driver.FindElement(By.Name("level"));
-            languageLevelDropdown.SendKeys(randomLevel);
-            
-
-             /*IWebElement languageLevelDropdown = driver.FindElement(By.Name("level"));
-            languageLevelDropdown.Click();
-           IWebElement nativeBillingualOption = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[2]/select/option[5]"));
-            nativeBillingualOption.Click();*/
-        }
-        public void createLanguage(IWebDriver driver)
-        {
+            languageLevelDropdown.SendKeys("Basic");
             IWebElement addButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[3]/input[1]"));
             addButton.Click();
             Thread.Sleep(3000);
         }
-        public string  GetVerifyLanguageCreation(IWebDriver driver)
+        public void inputKeys2(IWebDriver driver) 
         {
-            //check if record added
-            IWebElement newLanguage = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr/td[1]"));
-            return newLanguage.Text;
-           /* if (newLanguage.Text == "Tamil")
-            {
-                Assert.Pass("Language have been Successfully Created");
-            }
-            else
-            {
-                Assert.Fail("Language have not been Successfully Created");
-            }*/
+            Wait.WaitToBeExists(driver, "XPath", "//th[text()='Language']//following-sibling::th[@class='right aligned']/div[text()='Add New']", 7);
+            //create new record
+            IWebElement addnewButton = driver.FindElement(By.XPath("//th[text()='Language']//following-sibling::th[@class='right aligned']/div[text()='Add New']"));
+            addnewButton.Click();
+            IWebElement languageTextbox = driver.FindElement(By.Name("name"));
+            languageTextbox.SendKeys("Tamil");
+            Thread.Sleep(2000);
+            IWebElement languageLevelDropdown = driver.FindElement(By.Name("level"));
+            languageLevelDropdown.SendKeys("Native/Billingual");
+            IWebElement addButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[3]/input[1]"));
+            addButton.Click();
+            Thread.Sleep(3000);
         }
-        public void updateLanguage(IWebDriver driver)
+        public string getInputKey1(IWebDriver driver) 
+        {
+            IWebElement language1Textbox = driver.FindElement(By.XPath("//td[normalize-space()='Spanish']"));
+           return language1Textbox.Text;
+
+        }
+        public string getInputKey2(IWebDriver driver) 
+        {
+            IWebElement language2Textbox = driver.FindElement(By.XPath("//td[normalize-space()='Tamil']"));
+            return language2Textbox.Text;
+
+        }
+        public void editedlastLanguage(IWebDriver driver, string language ,string level)
         {
             //Click the edit Icon
-            IWebElement editLanguage = driver.FindElement(By.XPath("//td[@class='right aligned']//i[@class='outline write icon']"));
-            editLanguage.Click();
+            IWebElement editedIcon = driver.FindElement(By.XPath("//td[@class='right aligned']//i[@class='outline write icon']"));
+            editedIcon.Click();
 
-           
+            IWebElement editlanguageInput = driver.FindElement(By.Name("name"));
+            editlanguageInput.Clear();
+            editlanguageInput.SendKeys(language);
+            IWebElement editlevelOption = driver.FindElement(By.Name("level"));
+            editlevelOption.SendKeys(level);
+            IWebElement updateLanguages = driver.FindElement(By.XPath("//input[@value='Update']"));
+            updateLanguages.Click();
+            Thread.Sleep(3000);
+
         }
-
+        public string GeteditlanguageInput(IWebDriver driver)
+        {
+            IWebElement editlanguageInput = driver.FindElement(By.XPath("//td[normalize-space()='Spanish']"));
+            return editlanguageInput.Text;
+        }
+        public string GeteditlevelOption(IWebDriver driver)
+        {
+            IWebElement editlevelOption = driver.FindElement(By.XPath("//td[normalize-space()='Basic']"));
+            return editlevelOption.Text;
+        }
+        public void deleteLanguage(IWebDriver driver)
+        {
+            IWebElement deleteIcon = driver.FindElement(By.XPath("//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[3]/form[1]/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[3]/span[2]/i[1]"));
+            deleteIcon.Click();
+        }
+        public string getDeleteLanguage(IWebDriver driver)
+        {
+            IWebElement deletedInput = driver.FindElement(By.XPath("//td[normalize-space()='Spanish']"));
+            return deletedInput.Text;
+        }
+        public string getDeleteLevel(IWebDriver driver)
+        {
+            IWebElement deleteOption = driver.FindElement(By.XPath("//td[normalize-space()='Basic']"));
+            return deleteOption.Text;
+        }
     }
 }
         
